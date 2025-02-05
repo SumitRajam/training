@@ -37,8 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ulTodo.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-btn")) {
-            e.target.closest(".list-group-item").remove();
-            saveAllTodo();
+            if (confirm(`Are you sure you want to delete ${e.target.closest(".list-group-item").querySelector(".text-todo").textContent} todo?`)) {
+                e.target.closest(".list-group-item").remove();
+                saveAllTodo();
+            }
         }
 
         if (e.target.classList.contains("edit-btn")) {
@@ -94,8 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     deleteAllBtn.addEventListener("click", () => {
-        ulTodo.innerHTML = "";
-        localStorage.removeItem("allTodos");
+        if (confirm("Are you sure you want to delete all todos?")) {
+            ulTodo.innerHTML = ""; // Clear the todo list
+            localStorage.removeItem("allTodos"); // Remove from localStorage
+        }
     });
 
     const saveAllTodo = () => {
