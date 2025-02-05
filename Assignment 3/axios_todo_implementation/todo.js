@@ -8,29 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let editMode = false;
     let editElement = null;
 
-    function showToast(message) {
-        const toastHTML = `
-            <div class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        `;
-
-        const toastContainer = document.createElement('div');
-        toastContainer.classList.add('position-fixed', 'top-0', 'end-0', 'p-3');
-        toastContainer.innerHTML = toastHTML;
-        document.body.appendChild(toastContainer);
-
-        const toast = new bootstrap.Toast(toastContainer.querySelector('.toast'));
-        toast.show();
-
-        toastContainer.addEventListener('hidden.bs.toast', () => {
-            toastContainer.remove();
-        });
+    function notify(message) {
+        Toastify({
+            text: `${message}`,
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)"
+            }
+        }).showToast();
     }
 
     async function fetchTodoFromAPI() {
@@ -61,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(response)
             if (response.status === 201) {
                 const successMessage = `The new Todo with title: "${response.data.title}" is added successfully. Status: ${response.status}`;
-                showToast(successMessage);
+                notify(successMessage);
                 console.log(successMessage);
 
                 todos.push({
@@ -115,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log(response);
                     if (response.status === 200) {
                         const successMessage = `The todo with id: "${todoId}" and title: "${todoTitle}" is deleted successfully. Status: ${response.status}`;
-                        showToast(successMessage);
+                        notify(successMessage);
                         console.log(successMessage);
                         e.target.closest(".list-group-item").remove();
                         todos = todos.filter(todo => todo.id !== parseInt(todoId));
@@ -174,8 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 console.log(response)
                 if (response.status === 200) {
-                    const successMessage = `The todo with title: "${response.data.title}" is deleted successfully.\n Status: ${response.status}`;
-                    showToast(successMessage);
+                    const successMessage = `Todo updated to "${response.data.title}" successfully.\n Status: ${response.status}`;
+                    notify(successMessage);
                     console.log(successMessage);
                 }
 
@@ -196,20 +183,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     deleteAllBtn.addEventListener("click", () => {
         if (confirm("Are you sure you want to delete all todos?")) {
-            ulTodo.innerHTML = ""; // Clear the todo list
-            localStorage.removeItem("allTodos"); // Remove from localStorage
+            ulTodo.innerHTML = "";
+            notify("All todos have been deleted")
         }
     });
 
-    const saveAllTodo = () => {
-        const allTodos = [...document.querySelectorAll(".text-todo")].map(
-            (task) => task.textContent
-        );
-        localStorage.setItem("allTodos", JSON.stringify(allTodos));
-    };
-
-    const loadAllTodo = () => {
-        const allTodos = JSON.parse(localStorage.getItem("allTodos")) || [];
-        allTodos.forEach((task) => createTodo(task));
-    };
 });
