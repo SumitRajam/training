@@ -5,6 +5,7 @@
 https://github.com/user-attachments/assets/aadb06ac-85cf-4909-9737-1f5c555a2b28
 
 
+
 ## Note:
 
 ### Delete all endpoint
@@ -12,4 +13,4 @@ Delete All endpoint is not available in the api. If the number of Todos is less 
 So, we are just deleting html elements for now.
 
 ### Manipulation
-We have utilised http requests to manipulate data, but as the data at json placeholder can not be manipulated at backend, we are also manipulating elements from DOM. In real project, we can retrive data after every manipulation to show consistent and accurate data.
+We have utilised http requests to manipulate data, but as the data at json placeholder can not be manipulated at backend, so we are just showing the response that we get from certain endpoint and also manipulating elements from DOM for showing changes visualy. In real project, we can retrive data after every manipulation to show consistent and accurate data.
