@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/1dd16366-63f2-41d9-97d4-bd172dcb671c
 ## Note:
 
 ### Delete all endpoint
-Delete All endpoint is not available in the api. If the number of Todos is less (in range 0-5), we can use foreach loop to iterate the delete endpoint which takes id of Todos. But it is not standard procedure to achieve the functionality.
+Delete All endpoint is not available in the api. If the number of Todos is less (in range 0-5), we can use foreach loop to iterate the delete endpoint which takes id of Todos (* is not allowed in axios). But it is not standard procedure to achieve the functionality. 
 So, we are just deleting html elements for now.
 
 ### Manipulation

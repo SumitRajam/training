@@ -36,6 +36,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    const createTodo = (task, id) => {
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
+        li.innerHTML = `<span class="text-todo text-wrap" style="overflow-wrap: break-word;">${task}</span>
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary btn-sm edit-btn" data-id="${id}">Edit</button>
+      <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="${id}">Delete</button>
+    </div>`;
+
+        ulTodo.appendChild(li);
+    };
+
     async function addNewTodo() {
         const text = inputTodo.value.trim();
 
@@ -47,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             console.log(response)
             if (response.status === 201) {
-                const successMessage = `The new Todo with title: "${response.data.title}" is added successfully. Status: ${response.status}`;
+                const successMessage = `The new Todo with title: "${response.data.title}" is added successfully. Status in response: ${response.status}`;
                 notify(successMessage);
                 console.log(successMessage);
 
@@ -64,17 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchTodoFromAPI();
 
-    const createTodo = (task, id) => {
-        const li = document.createElement("li");
-        li.className = "list-group-item d-flex justify-content-between align-items-center";
-        li.innerHTML = `<span class="text-todo text-wrap" style="overflow-wrap: break-word;">${task}</span>
-    <div class="btn-group">
-      <button type="button" class="btn btn-primary btn-sm edit-btn" data-id="${id}">Edit</button>
-      <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="${id}">Delete</button>
-    </div>`;
-
-        ulTodo.appendChild(li);
-    };
 
     buttonTodo.addEventListener("click", () => {
         const text = inputTodo.value.trim();
@@ -96,12 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.classList.contains("delete-btn")) {
             const todoId = e.target.closest(".list-group-item").querySelector(".edit-btn").getAttribute("data-id");
             const todoTitle = e.target.closest(".list-group-item").querySelector("span").textContent;
-            if (confirm(`Are you sure you want to delete this todo?`)) {
+            if (confirm(`Are you sure you want to delete the todo "${todoTitle}"?`)) {
                 try {
                     response = await axios.delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`);
                     console.log(response);
                     if (response.status === 200) {
-                        const successMessage = `The todo with id: "${todoId}" and title: "${todoTitle}" is deleted successfully. Status: ${response.status}`;
+                        const successMessage = `The todo with title: "${todoTitle}" is deleted successfully. Status in response: ${response.status}`;
                         notify(successMessage);
                         console.log(successMessage);
                         e.target.closest(".list-group-item").remove();
@@ -161,7 +162,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 console.log(response)
                 if (response.status === 200) {
-                    const successMessage = `Todo updated to "${response.data.title}" successfully.\n Status: ${response.status}`;
+                    const todoIndex = todos.findIndex(todo => todo.id === parseInt(todoId));
+                    if (todoIndex !== -1) {
+                        todos[todoIndex].title = updatedText;
+                    }
+                    const successMessage = `Todo updated to "${response.data.title}" successfully.\n Status in response: ${response.status}`;
                     notify(successMessage);
                     console.log(successMessage);
                 }
@@ -183,6 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     deleteAllBtn.addEventListener("click", () => {
         if (confirm("Are you sure you want to delete all todos?")) {
+            todos.splice(0, todos.length);
             ulTodo.innerHTML = "";
             notify("All todos have been deleted")
         }
