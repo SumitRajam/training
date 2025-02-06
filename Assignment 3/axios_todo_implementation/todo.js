@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     response = await axios.delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`);
                     console.log(response);
                     if (response.status === 200) {
-                        const successMessage = `The todo with id: "${todoId}" and title: "${todoTitle}" is deleted successfully. Status: ${response.status}`;
+                        const successMessage = `The todo with title: "${todoTitle}" is deleted successfully. Status: ${response.status}`;
                         notify(successMessage);
                         console.log(successMessage);
                         e.target.closest(".list-group-item").remove();
@@ -161,6 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 console.log(response)
                 if (response.status === 200) {
+                    const todoIndex = todos.findIndex(todo => todo.id === parseInt(todoId));
+                    if (todoIndex !== -1) {
+                        todos[todoIndex].title = updatedText;
+                    }
                     const successMessage = `Todo updated to "${response.data.title}" successfully.\n Status: ${response.status}`;
                     notify(successMessage);
                     console.log(successMessage);
@@ -184,6 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteAllBtn.addEventListener("click", () => {
         if (confirm("Are you sure you want to delete all todos?")) {
             ulTodo.innerHTML = "";
+            todos.splice(0, todos.length)
             notify("All todos have been deleted")
         }
     });
