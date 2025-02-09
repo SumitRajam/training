@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 console.log("No cart items found for the user.");
             }
-            window.location.href = 'home.html';
+            window.location.href = './views/home.html';
         } catch (error) {
             console.error("Error fetching user cart:", error);
         }

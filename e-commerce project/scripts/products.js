@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (cartId) {
             const success = await updateCart(cartId, cartProducts);
-            if (success) alert("Cart updated successfully!");
+            // if (success) alert("Cart updated successfully!");
         } else {
             const newCart = await createCart(cartProducts);
             if (newCart) {

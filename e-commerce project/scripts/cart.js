@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("proceed-checkout").addEventListener("click", () => {
         const cartId = parseInt(localStorage.getItem('cartID'));
+        let cartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
         updateCart(cartId, cartProducts);
     });
 
