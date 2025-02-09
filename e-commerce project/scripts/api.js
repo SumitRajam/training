@@ -10,6 +10,16 @@ async function fetchProducts() {
     }
 }
 
+export async function fetchUserDetails(userID) {
+    try {
+        const response = await axios.get(`${API_URL}/users/${userID}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching user details:", error);
+        return [];
+    }
+}
+
 async function fetchByCategory(category) {
     try {
         const response = await axios.get(`${API_URL}/products/${category}`);
@@ -22,8 +32,8 @@ async function fetchByCategory(category) {
 
 async function fetchCart(cartId) {
     try {
-        const response = await fetch(`${API_URL}/carts/${cartId}`);
-        return await response.json();
+        const response = await axios.get(`${API_URL}/carts/${cartId}`);
+        return response;
     } catch (error) {
         console.error("Error fetching cart:", error);
         return null;
@@ -32,16 +42,14 @@ async function fetchCart(cartId) {
 
 async function updateCart(cartId, cartProducts) {
     try {
-        await fetch(`${API_URL}/carts/${cartId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                userId: 3,
-                date: new Date().toISOString().split("T")[0],
-                products: cartProducts
-            })
+        const response = await axios.put(`${API_URL}/carts/${cartId}`, {
+            date: new Date().toISOString().split("T")[0],
+            products: cartProducts
+        }, {
+            headers: { "Content-Type": "application/json" }
         });
-        console.log(response.json());
+
+        window.alert(`Response status: ${JSON.stringify(response.status)}\nResponse data: ${JSON.stringify(response.data)}\nCart updated successfully`);
         return true;
     } catch (error) {
         console.error("Error updating cart:", error);

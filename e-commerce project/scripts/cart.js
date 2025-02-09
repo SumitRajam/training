@@ -1,13 +1,14 @@
-import { updateCartQuantity, fetchProducts, fetchCart } from "./api.js";
+import { updateCartQuantity, fetchProducts, fetchCart, updateCart } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+    let cartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
     async function loadCart() {
         try {
             const storedItems = JSON.parse(localStorage.getItem("items")) || [];
             const cartItemsContainer = document.getElementById("cart-items");
+            let cartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
             let totalCost = 0;
             cartItemsContainer.innerHTML = "";
-            const cartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
             if (cartProducts.length === 0) {
                 cartItemsContainer.innerHTML = `<tr><td colspan="5" class="text-center">Your cart is empty.</td></tr>`;
                 document.getElementById("total-cost").textContent = "";
@@ -61,7 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-
+    document.getElementById("proceed-checkout").addEventListener("click", () => {
+        const cartId = parseInt(localStorage.getItem('cartID'));
+        updateCart(cartId, cartProducts);
+    });
 
     window.clearCart = function () {
         localStorage.removeItem("cartProducts");

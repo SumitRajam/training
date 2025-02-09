@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     async function updateCartLogic(productId, quantity) {
-        let cartId = localStorage.getItem("cartId");
+        let cartId = localStorage.getItem("cartID");
         let cartProducts = JSON.parse(localStorage.getItem("cartProducts")) || [];
 
         let existingProduct = cartProducts.find(p => p.productId === parseInt(productId));

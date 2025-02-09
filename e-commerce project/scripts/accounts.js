@@ -20,11 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (userCart.length > 0) {
                 const cartItems = userCart.flatMap(cart => cart.products);
+                localStorage.setItem("cartID", JSON.stringify(userCart[0]?.id));
                 localStorage.setItem("cartProducts", JSON.stringify(cartItems));
             } else {
                 console.log("No cart items found for the user.");
             }
-            window.location.href = 'index.html';
+            window.location.href = 'home.html';
         } catch (error) {
             console.error("Error fetching user cart:", error);
         }
@@ -42,9 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             const token = response.data.token;
             localStorage.setItem("token_ShopTastic", token);
-            // const userResponse = await axios.get(`https://fakestoreapi.com/users/${userID}`);
-            // const userData = userResponse.data;
-            // delete userData.password;
             const decodedData = decodeJWT(token);
             fetchUserCart(decodedData);
 
