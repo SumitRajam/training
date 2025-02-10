@@ -14,4 +14,7 @@ https://github.com/user-attachments/assets/652bf407-10ba-4340-bc8f-b58d9a4eac92
 https://github.com/user-attachments/assets/291f291f-c88b-4f7c-9731-4c08d1b4e22e
 
 
+### admin page
+
+https://github.com/user-attachments/assets/ec0c66f1-f012-408d-adc7-0a0ad8dc77c5
 
