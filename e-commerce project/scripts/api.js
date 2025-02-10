@@ -91,4 +91,26 @@ export async function updateCartQuantity(productId, change) {
     }
 }
 
+export const addProduct = async (product) => {
+    try {
+        const response = await axios.post(`${API_URL}/products`, product);
+        window.alert(`Response status: ${JSON.stringify(response.status)}\nResponse data: ${JSON.stringify(response.data)}\nItem added successfully`);
+        return response.data;
+    } catch (error) {
+        console.error("Error adding product:", error);
+        return null;
+    }
+};
+
+export const deleteProduct = async (productId) => {
+    try {
+        const response = await axios.delete(`${API_URL}/products/${productId}`);
+        window.alert(`Response status: ${JSON.stringify(response.status)}\nResponse data: ${JSON.stringify(response.data)}\nItem deleted successfully`);
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        return null;
+    }
+};
+
 export { fetchProducts, fetchCart, updateCart, createCart };
