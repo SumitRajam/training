@@ -6,10 +6,12 @@ The sidebar goes down and looks like the mobile apps navigation bar. This is ach
 
 ### Demo
 
-https://github.com/user-attachments/assets/d21123ea-1c84-419e-a5ae-8e26a7b1fd7f
+https://github.com/user-attachments/assets/652bf407-10ba-4340-bc8f-b58d9a4eac92
 
 
 ### Responsiveness
 
-https://github.com/user-attachments/assets/839eb38e-e9a4-4760-90f4-8d3982ff4828
+https://github.com/user-attachments/assets/291f291f-c88b-4f7c-9731-4c08d1b4e22e
+
+
 
