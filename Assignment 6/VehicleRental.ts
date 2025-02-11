@@ -1,11 +1,3 @@
-/*
-## Vehicle Rental System
-
-    Create Vehicle class with brand, model, rentPricePerDay.
-    Subclasses: Car, Bike, Truck.
-    Polymorphism: Implement calculateRentalCost(days).
-*/
-
 class Vehicle {
     brand: string;
     model: string;

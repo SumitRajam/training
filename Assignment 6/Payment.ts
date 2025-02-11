@@ -1,11 +1,3 @@
-/*
-## Online Payment System
-
-    Create Payment class with amount, date.
-    Subclasses: CreditCardPayment, PayPalPayment, CryptoPayment.
-    Abstraction: Hide sensitive details like private cardNumber.
-*/
-
 abstract class Payment {
     protected amount: number;
     protected date: string;
