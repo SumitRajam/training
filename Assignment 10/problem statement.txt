@@ -1,0 +1,13 @@
+Create a from component in react, 
+
+The form should contain:
+First Name (Text Input)
+Last Name (Text Input)
+Age (Number Input)
+Gender (Radio Buttons)
+Skills (Select Dropdown)
+Email (Text Input)
+Phone Number (Number Input)
+Address (Text Area)
+
+@all
