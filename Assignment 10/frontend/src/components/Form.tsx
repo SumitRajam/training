@@ -14,11 +14,51 @@ export default function Form() {
     })
 
     function setUserData<T>(key: string, value: T): void {
-        setData((prev) => ({ ...prev, [key]: value }))
+        setData((prev) => ({ ...prev, [key]: value }));
+    }
+
+    function validateField(key: string, value: string) {
+        if (key === 'email') {
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!regex.test(value)) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+        }
+        if (key === 'age') {
+            if (Number(value) < 1) {
+                alert('Please enter a valid age')
+                return false;
+            }
+        }
+        if (key === 'phone') {
+            if (value.length !== 10) {
+                alert('Please enter a valid phone number. (10 digits)');
+                return false;
+            }
+            if (Number(value) < 0) {
+                alert('Please enter a valid phone number. It can not be negative');
+                return false;
+            }
+        }
+        if (value === "") {
+            alert(`This field cannot be empty: ${key}`);
+            return false;
+        }
+        return true;
     }
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+
+        const fields = Object.keys(formData);
+        for (let key of fields) {
+            const value = formData[key as keyof typeof formData];
+            if (!validateField(key, value.toString())) {
+                return;
+            }
+        }
+
         window.alert(JSON.stringify(formData, null, 2));
     }
 
