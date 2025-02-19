@@ -32,7 +32,8 @@ export default function Todo() {
     };
 
     const deleteAllTodos = () => {
-        setTodos([]);
+        if (window.confirm("Are you sure you want to delete all tasks?"))
+            setTodos([]);
     };
 
     const startEditing = (index: number) => {
