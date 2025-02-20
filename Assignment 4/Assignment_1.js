@@ -4,9 +4,9 @@ function fetchData(callback) {
         const data = ["Sumit", "Manav", "Durgesh", "Yashodhan", "Vishwaved"];
 
         if (success) {
-            callbackFunc(data, null);
+            callback(data, null);
         } else {
-            callbackFunc(null, "Server error: Failed to fetch data");
+            callback(null, "Server error: Failed to fetch data");
         }
     }, 2000);
 }
