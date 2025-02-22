@@ -23,7 +23,7 @@ function App() {
             Search
           </button>
         </div>
-        <div className="card">{searchParam.get("query")}</div>
+        <div className="card">Query : {searchParam.get("query")}</div>
       </div>
     </>
   );
