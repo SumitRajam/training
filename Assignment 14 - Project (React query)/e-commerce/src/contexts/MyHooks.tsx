@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts, fetchUserDetails } from "../api";
+import { fetchProducts, fetchUserDetails, fetchByCategory } from "../api";
 
-export const useProducts = () => {
+export const useProducts = (category: string) => {
     return useQuery({
-        queryKey: ["products"],
-        queryFn: fetchProducts,
+        queryKey: ["products", category],
+        queryFn: category !== "all" ? () => fetchByCategory(category) : fetchProducts,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
     });
