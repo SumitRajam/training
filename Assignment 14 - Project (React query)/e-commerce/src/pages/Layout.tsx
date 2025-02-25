@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
-// import Navbar from "../components/Navbar";
-// import Sidebar from "../components/Sidebar";
-import "../styles/Layout.css";
-// import ProductList from '../components/ProductList';
-import { Outlet } from 'react-router-dom'
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import "../styles/Layout.css";
 
 export default function Layout() {
 

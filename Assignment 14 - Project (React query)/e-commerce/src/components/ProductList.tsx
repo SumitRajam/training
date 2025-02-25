@@ -1,31 +1,38 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useProducts } from "../contexts/MyHooks";
-import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 const ProductList = () => {
-    const { dispatch } = useGlobalContext();
-    const [selectedCategory, setSelectedCategory] = useState("all");
+    const { selectedCategory, syncCart, dispatch } = useGlobalContext();
     const { data: products, isLoading, error } = useProducts(selectedCategory);
+
+    const syncCartMutation = useMutation({
+        mutationFn: () => syncCart(),
+        onError: (error) => console.error("Error updating cart:", error),
+    });
 
     if (isLoading) return <p className="text-center mt-4">Loading...</p>;
     if (error) return <p className="text-danger text-center mt-4">Error loading products.</p>;
 
-    return (
-        <div className="container mt-4">
-            <h2 className="text-center mb-4">Products</h2>
+    const addToCart = (id: number, title: string, category: string, price: number, description: string, image: string) => {
+        const quantity = Number(window.prompt("Enter quantity:"));
+        console.log(quantity);
+        if (!quantity || quantity <= 0) {
+            alert("Invalid quantity! Please enter a valid number.");
+            return;
+        }
 
-            <div className="text-center mb-4">
-                {["all", "electronics", "fashion"].map((category) => (
-                    <button
-                        key={category}
-                        className={`btn mx-2 btn-outline-primary`}
-                        onClick={() => setSelectedCategory(category)}
-                    >
-                        {category}
-                    </button>
-                ))}
-            </div>
+        dispatch({ type: "ADD_TO_CART", payload: { id, title, category, price, quantity, image, description } });
+        syncCartMutation.mutate();
+
+        syncCart();
+
+    }
+
+    return (
+        <div className="container mt-5">
+            <h2 className="text-center mb-4">Products</h2>
 
             <div className="container d-flex flex-wrap justify-content-center align-items-center">
                 {products?.map((product) => (
@@ -45,15 +52,13 @@ const ProductList = () => {
                                 <p className="fw-bold">${product.price}</p>
 
                                 <div className="d-flex gap-2">
-                                    <Link to={`/product/${product.id}`}>
-                                        <button className="btn btn-secondary w-100 mt-auto">Details</button>
-                                    </Link>
-                                    <button
-                                        className="btn btn-primary w-100 mt-auto"
-                                        onClick={() => dispatch({ type: "ADD_TO_CART", payload: product })}
+                                    <Link
+                                        to={`/product/${product.id}`}
+                                        className="btn btn-secondary w-100 mt-auto"
                                     >
-                                        Add to Cart
-                                    </button>
+                                        Details
+                                    </Link>
+                                    <button className="btn btn-primary w-100 mt-auto" onClick={() => addToCart(product.id, product.title, product.category, product.price, product.description, product.image)}>Add to Cart</button>
                                 </div>
                             </div>
                         </div>

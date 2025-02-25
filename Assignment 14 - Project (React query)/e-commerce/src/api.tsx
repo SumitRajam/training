@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 const api = axios.create({
     baseURL: "https://fakestoreapi.com",
@@ -13,6 +14,7 @@ export interface Product {
     category: string;
     image: string;
     rating?: { rate: number, count: number }
+    quantity?: number | 0;
 }
 
 export interface UserDetails {
@@ -82,20 +84,6 @@ export const fetchCart = async (cartId: number): Promise<Cart | null> => {
     }
 };
 
-export const updateCart = async (cartId: number, cartProducts: CartProduct[]): Promise<boolean> => {
-    try {
-        const response = await api.put(`/carts/${cartId}`, {
-            date: new Date().toISOString().split("T")[0],
-            products: cartProducts
-        });
-
-        window.alert(`Response status: ${response.status}\nCart updated successfully`);
-        return true;
-    } catch (error) {
-        console.error("Error updating cart:", error);
-        return false;
-    }
-};
 
 export const createCart = async (cartProducts: CartProduct[]): Promise<Cart | null> => {
     try {
@@ -111,16 +99,34 @@ export const createCart = async (cartProducts: CartProduct[]): Promise<Cart | nu
     }
 };
 
-export const addProduct = async (product: Product): Promise<Product | null> => {
+export const updateCart = async (cartId: number, cartProducts: CartProduct[]): Promise<boolean> => {
     try {
-        const response = await api.post<Product>("/products", product);
-        window.alert(`Response status: ${response.status}\nItem added successfully`);
-        return response.data;
+        const response = await api.put(`/carts/${cartId}`, {
+            date: new Date(),
+            products: cartProducts
+        });
+
+        window.alert(`Response status: ${response.status}\nCart updated successfully`);
+        return true;
     } catch (error) {
-        console.error("Error adding product:", error);
-        return null;
+        console.error("Error updating cart:", error);
+        return false;
     }
 };
+
+export const addProduct = () => {
+    return useMutation({
+        mutationFn: async (product: Product): Promise<Product | null> => {
+            const response = await api.post<Product>("/products", product);
+            window.alert(`Response status: ${response.status}\nItem added successfully`);
+            return response.data;
+        },
+        onError: (error) => {
+            console.error("Error adding product:", error);
+        }
+    });
+};
+
 
 export const deleteProduct = async (productId: number): Promise<boolean> => {
     try {
@@ -130,5 +136,28 @@ export const deleteProduct = async (productId: number): Promise<boolean> => {
     } catch (error) {
         console.error("Error deleting product:", error);
         return false;
+    }
+};
+
+export async function fetchUserCart(sub: number): Promise<CartProduct[]> {
+    try {
+        const response = await api.get<Cart[]>(`/carts/user/${sub}`);
+        return response.data.reduce<CartProduct[]>((acc, cart) => [...acc, ...cart.products], []);
+    } catch (error) {
+        console.error("Error fetching user cart:", error);
+        return [];
+    }
+}
+
+export const fetchProductDetails = async (productId: number) => {
+    try {
+        const response = await api.get(`/products/${productId}`);
+        if (response.status !== 200 || !response.data) {
+            throw new Error(`Failed to fetch product details for ID: ${productId}`);
+        }
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching product details:", error);
+        return null;
     }
 };

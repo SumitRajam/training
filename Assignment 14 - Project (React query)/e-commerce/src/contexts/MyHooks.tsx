@@ -7,6 +7,8 @@ export const useProducts = (category: string) => {
         queryFn: category !== "all" ? () => fetchByCategory(category) : fetchProducts,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
+        retry: false,
+        staleTime: 5 * 60 * 1000,
     });
 };
 
