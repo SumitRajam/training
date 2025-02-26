@@ -2,7 +2,8 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-    const { selectedCategory, setSelectedCategory } = useGlobalContext();
+    const { selectedCategory, setSelectedCategory, state } = useGlobalContext();
+    const userRole = state.user?.role || ""; // Safely access role
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top w-100 px-4">
@@ -16,11 +17,16 @@ export default function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav me-auto">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/home">Home</Link>
+                            <Link className="nav-link" to="">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/cart">Cart</Link>
+                            <Link className="nav-link" to="cart">Cart</Link>
                         </li>
+                        {userRole === "Admin" && (
+                            <li className="nav-item">
+                                <Link className="nav-link" to="admin-page">Admin Page</Link>
+                            </li>
+                        )}
                     </ul>
 
                     <select

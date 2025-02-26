@@ -1,9 +1,21 @@
+import { Navigate, Outlet } from "react-router-dom";
+import { useGlobalContext } from "../contexts/GlobalContext";
 
+const ProtectedRoute = ({ allowedRoles }: { allowedRoles: string[] }) => {
+    const { state } = useGlobalContext();
+    const isAuthenticated = !!state.user?.id;
+    const userRole = state.user?.role || "";
 
-export default function ProtectedRoute() {
-    return (
-        <div>
+    if (!isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
 
-        </div>
-    )
-}
+    if (!allowedRoles.includes(userRole)) {
+        alert("You are not allowed to access this page");
+        return <Navigate to="/" replace />;
+    }
+
+    return <Outlet />;
+};
+
+export default ProtectedRoute;

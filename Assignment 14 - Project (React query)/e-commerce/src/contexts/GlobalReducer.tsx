@@ -1,5 +1,3 @@
-import { useGlobalContext } from "../contexts/GlobalContext";
-
 export interface Product {
     id: number;
     title: string;

@@ -2,10 +2,17 @@ import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useProducts } from "../contexts/MyHooks";
 import { useMutation } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const ProductList = () => {
     const { selectedCategory, syncCart, dispatch } = useGlobalContext();
     const { data: products, isLoading, error } = useProducts(selectedCategory);
+
+    useEffect(() => {
+        if (products) {
+            dispatch({ type: "SET_PRODUCTS", payload: products });
+        }
+    }, [products, dispatch]);
 
     const syncCartMutation = useMutation({
         mutationFn: () => syncCart(),
@@ -53,7 +60,7 @@ const ProductList = () => {
 
                                 <div className="d-flex gap-2">
                                     <Link
-                                        to={`/product/${product.id}`}
+                                        to={`product/${product.id}`}
                                         className="btn btn-secondary w-100 mt-auto"
                                     >
                                         Details
