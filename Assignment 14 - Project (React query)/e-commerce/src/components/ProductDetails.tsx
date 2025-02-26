@@ -11,11 +11,11 @@ const ProductDetails = () => {
         if (!response.ok) throw new Error("Product not found");
         return response.json();
     };
-    // ✅ Fetch product from API instead of state
+
     const { data: product, isLoading, error } = useQuery({
         queryKey: ["product", productId],
         queryFn: () => fetchProduct(productId!),
-        enabled: !!productId, // Only fetch if productId exists
+        enabled: !!productId,
     });
 
     const syncCartMutation = useMutation({

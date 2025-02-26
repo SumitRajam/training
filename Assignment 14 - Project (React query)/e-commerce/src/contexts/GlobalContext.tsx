@@ -1,6 +1,6 @@
 import React, { createContext, useContext, ReactNode, useReducer, useEffect, useState } from "react";
 import { reducer, initialState, Action, State } from "./GlobalReducer";
-import { fetchUserCart, fetchProductDetails, updateCart } from "../api";
+import { updateCart } from "../api";
 
 const GlobalContext = createContext<
     { state: State; dispatch: React.Dispatch<Action>; selectedCategory: string; setSelectedCategory: React.Dispatch<React.SetStateAction<string>>; syncCart: () => Promise<void> }
