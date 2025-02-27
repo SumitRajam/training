@@ -8,9 +8,11 @@ export default function Navbar() {
             <nav className="bg-violet-800 text-white p-4 shadow-md w-full">
                 <div className="flex justify-start">
                     <SidebarTrigger />
-                    <Link to="/" className="text-xl font-bold">
-                        BrandName
-                    </Link>
+                    <span className='ml-2'>
+                        <Link to="/" className="text-xl font-bold">
+                            Shopify
+                        </Link>
+                    </span>
                 </div>
             </nav>
         </div>

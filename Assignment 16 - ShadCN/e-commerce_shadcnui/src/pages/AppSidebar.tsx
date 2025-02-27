@@ -1,5 +1,6 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Home, Edit } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import {
     Sidebar,
@@ -10,43 +11,36 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-const items = [
+type SidebarItem = {
+    title: string;
+    icon: React.ComponentType<any>;
+};
+
+const items: SidebarItem[] = [
     {
         title: "Home",
         icon: Home,
     },
     {
-        title: "Inbox",
-        icon: Inbox,
+        title: "Update Products",
+        icon: Edit,
     },
-    {
-        title: "Calendar",
-        icon: Calendar,
-    },
-    {
-        title: "Search",
-        icon: Search,
-    },
-    {
-        title: "Settings",
-        icon: Settings,
-    },
-]
+];
 
 export function AppSidebar() {
     return (
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Application</SidebarGroupLabel>
+                    <SidebarGroupLabel>Shopify</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <Link to={item.title.toLowerCase()}>
+                                        <Link to={encodeURIComponent(item.title.toLowerCase())}>
                                             <item.icon />
                                             <span>{item.title}</span>
                                         </Link>
@@ -58,5 +52,5 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
-    )
+    );
 }

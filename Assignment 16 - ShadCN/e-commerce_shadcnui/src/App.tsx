@@ -1,12 +1,12 @@
-import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProductList from './pages/ProductList'
 import Layout from './pages/Layout';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ProductDetails from './pages/ProductDetails';
+import UpdateProducts from './pages/UpdateProducts';
 
 function App() {
-  const [count, setCount] = useState(0)
   const queryClient = new QueryClient()
 
   return (
@@ -17,6 +17,8 @@ function App() {
             <Route path='/' element={< Layout />} >
               <Route index element={<ProductList />} />
               <Route path="home" element={<ProductList />} />
+              <Route path="product/:id" element={<ProductDetails />} />
+              <Route path="update products" element={<UpdateProducts />} />
             </Route>
           </Routes>
         </BrowserRouter>
