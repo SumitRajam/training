@@ -138,7 +138,7 @@ export const useCreateCart = () => {
             try {
                 const response = await app.post("/carts", {
                     userId: 2,
-                    date: new Date().toISOString().split('T')[0],
+                    date: new Date(),
                     products: cartProducts
                 });
 
@@ -153,14 +153,14 @@ export const useCreateCart = () => {
 
 export const useUpdateCart = () => {
     return useMutation({
-        mutationFn: async ({ cartId, updatedProducts }: { cartId: number; updatedProducts: { productId: number; quantity: number }[] }) => {
+        mutationFn: async ({ cartId, updatedProducts }: { cartId: number; updatedProducts: { id: number; quantity: number }[] }) => {
             try {
                 const response = await app.put(`/carts/${cartId}`, {
                     userId: 2,
                     date: new Date(),
                     products: updatedProducts
                 });
-
+                window.alert(`Cart updated successfully:\n${JSON.stringify(response.status)}\n${JSON.stringify(response.data)}`);
                 return response.data;
             } catch (error) {
                 console.error("Error updating cart:", error);

@@ -2,8 +2,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface CartItem {
-    productId: number;
+    id: number;
     quantity: number;
+    title: string;
+    image: string;
+    price: number;
+    description: string;
 }
 
 export interface CartState {
@@ -25,11 +29,11 @@ export const useCartStore = create<CartState>()(
             addToCart: (product: CartItem) =>
                 set((state) => {
                     alert(JSON.stringify(product));
-                    const existingItem = state.cart.find((item) => item.productId === product.productId);
+                    const existingItem = state.cart.find((item) => item.id === product.id);
                     if (existingItem) {
                         return {
                             cart: state.cart.map((item) =>
-                                item.productId === product.productId
+                                item.id === product.id
                                     ? { ...item, quantity: item.quantity + 1 }
                                     : item
                             ),
@@ -41,27 +45,27 @@ export const useCartStore = create<CartState>()(
 
             removeFromCart: (id: number) =>
                 set((state) => ({
-                    cart: state.cart.filter((item) => item.productId !== id),
+                    cart: state.cart.filter((item) => item.id !== id),
                 })),
 
             increaseQuantity: (id: number) =>
                 set((state) => ({
                     cart: state.cart.map((item) =>
-                        item.productId === id ? { ...item, quantity: item.quantity + 1 } : item
+                        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
                     ),
                 })),
 
             decreaseQuantity: (id: number) =>
                 set((state) => ({
                     cart: state.cart.map((item) =>
-                        item.productId === id && item.quantity > 1
+                        item.id === id && item.quantity > 1
                             ? { ...item, quantity: item.quantity - 1 }
                             : item
                     ),
                 })),
         }),
         {
-            name: "cart-storage",
+            name: "cart",
         }
     )
 );

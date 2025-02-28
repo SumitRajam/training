@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useCartStore } from "../store/cartStore"; // ✅ Import cart store
+import { useCartStore } from "../store/cartStore";
 
 type Product = {
     id: number;
@@ -75,7 +75,7 @@ export default function ProductList() {
                                 <Link to={`/product/${product.id}`}>
                                     <Button variant="outline">Details</Button>
                                 </Link>
-                                <Button onClick={() => addToCart(product)}>Buy</Button> {/* ✅ Add to Cart */}
+                                <Button onClick={() => addToCart(product)}>Buy</Button>
                             </div>
                         </CardContent>
                     </Card>
