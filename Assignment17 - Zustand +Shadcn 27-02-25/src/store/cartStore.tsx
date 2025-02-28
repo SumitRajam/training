@@ -28,18 +28,24 @@ export const useCartStore = create<CartState>()(
 
             addToCart: (product: CartItem) =>
                 set((state) => {
-                    alert(JSON.stringify(product));
+                    let quantityInput: string | null = prompt("Enter Quantity: ");
+                    let quantity: number = parseInt(quantityInput || "0", 10); // Convert to number safely
+
+                    if (isNaN(quantity) || quantity <= 0) {
+                        alert("Invalid input! Please enter a valid number.");
+                        return state; // Return the previous state if input is invalid
+                    }
+
                     const existingItem = state.cart.find((item) => item.id === product.id);
                     if (existingItem) {
                         return {
                             cart: state.cart.map((item) =>
                                 item.id === product.id
-                                    ? { ...item, quantity: item.quantity + 1 }
-                                    : item
+                                    ? { ...item, quantity: item.quantity + quantity } : item
                             ),
                         };
                     } else {
-                        return { cart: [...state.cart, { ...product, quantity: 1 }] };
+                        return { cart: [...state.cart, { ...product, quantity }] };
                     }
                 }),
 

@@ -17,6 +17,10 @@ const CartComponent: React.FC = () => {
         });
     };
 
+    const calculateTotal = () => {
+        return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    }
+
     return (
         <div className="container mx-auto p-6">
             <h2 className="text-2xl font-bold text-center mb-4">Your Cart</h2>
@@ -33,6 +37,9 @@ const CartComponent: React.FC = () => {
                                         <CardTitle>{item.title}</CardTitle>
                                         <p className="text-gray-600">Price: <strong>${item.price}</strong></p>
                                     </div>
+                                    <div>
+                                        <CardTitle className="text-gray-600">{item.description}</CardTitle>
+                                    </div>
                                 </div>
                             </CardHeader>
                             <Separator />
@@ -46,6 +53,9 @@ const CartComponent: React.FC = () => {
                             </CardContent>
                         </Card>
                     ))}
+                    <div className="flex items-center align-middle justify-center space-x-3">
+                        <span className="text-lg font-semibold">Total: $ {calculateTotal()}</span>
+                    </div>
                 </div>
             )
             }
