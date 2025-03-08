@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-// ✅ Define Product Types
 type Product = {
     id: number;
     title: string;
@@ -20,7 +19,6 @@ type ProductStore = {
     removeProduct: (id: number) => void;
 };
 
-// ✅ Define Zustand Store
 const useProductStore = create<ProductStore>()(
     devtools(
         persist(

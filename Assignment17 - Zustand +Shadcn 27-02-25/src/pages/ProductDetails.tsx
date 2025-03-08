@@ -4,7 +4,6 @@ import { useProductDetails } from "../api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-// Define a TypeScript type for the product details
 type Product = {
     id: number;
     title: string;
@@ -14,8 +13,8 @@ type Product = {
 };
 
 export default function ProductDetails() {
-    const { id } = useParams<{ id: string }>(); // Ensure `id` is treated as a string
-    const { data: product, isLoading, error } = useProductDetails(id as unknown as number); // Convert `id` to number
+    const { id } = useParams<{ id: string }>();
+    const { data: product, isLoading, error } = useProductDetails(id as unknown as number);
 
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error loading product.</p>;
