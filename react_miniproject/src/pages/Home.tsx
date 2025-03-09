@@ -26,9 +26,7 @@ const Home = () => {
 
     return (
         <div className="flex flex-col items-center gap-6 p-4 sm:p-8 w-full">
-            {/* Top Section */}
             <div className="flex flex-col md:flex-row w-full gap-6">
-                {/* Users & Companies (Stacked on Mobile, Side by Side on Large Screens) */}
                 <div className="flex flex-col gap-6 flex-1">
                     <Link to="manage-users">
                         <Card className="w-full cursor-pointer hover:shadow-xl transition-all duration-300 border rounded-2xl p-4 sm:p-5 bg-white shadow-md">
@@ -44,7 +42,6 @@ const Home = () => {
                     </Link>
                 </div>
 
-                {/* Posts & Comments */}
                 <Link to="posts" className="flex-1">
                     <Card className="w-full cursor-pointer hover:shadow-xl transition-all duration-300 border rounded-2xl p-4 sm:p-5 bg-white shadow-md">
                         <Title level={4} className="text-gray-700">Total Posts</Title>
@@ -57,7 +54,6 @@ const Home = () => {
                 </Link>
             </div>
 
-            {/* Roles Section */}
             <div className="w-full flex justify-start">
                 <Card className="w-full md:w-1/2 cursor-pointer hover:shadow-xl transition-all duration-300 border rounded-2xl p-4 sm:p-5 bg-white shadow-md">
                     <Title level={4} className="text-gray-700">Roles</Title>
