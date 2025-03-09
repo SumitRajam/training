@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Card, List, Alert } from 'antd';
-import usePostsStore from '../store/usePostsStore';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Card, List, Alert, Typography } from "antd";
+import usePostsStore from "../store/usePostsStore";
+import useUserStore from "../store/useUserStore";
+
+const { Title, Text } = Typography;
 
 const PostDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const postIdNum = Number(id);
 
     const { getPostById, getCommentsByPostId } = usePostsStore();
+    const { users } = useUserStore(); // Get users from Zustand
 
     const post = getPostById(postIdNum);
     const comments = getCommentsByPostId(postIdNum);
@@ -21,10 +25,17 @@ const PostDetail: React.FC = () => {
         return <Alert message="Post not found" type="warning" showIcon />;
     }
 
+    // Function to get author's name from Zustand store
+    const getAuthorName = (userId: number) => {
+        const user = users.find((user) => user.id === userId);
+        return user ? user.name : "Unknown Author";
+    };
+
     return (
         <div className="p-4">
             <Card title={post.title} className="shadow-md">
-                <p className="text-gray-700">{post.body}</p>
+                <Text type="secondary">By: {getAuthorName(post.userId)}</Text>
+                <p className="text-gray-700 mt-2">{post.body}</p>
             </Card>
 
             <h3 className="mt-6 text-xl font-semibold">Comments</h3>
