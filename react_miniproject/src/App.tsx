@@ -7,6 +7,8 @@ import ManageCompanies from "./pages/ManageCompanies";
 import ManageUsers from "./pages/ManageUsers";
 import UserDetails from "./pages/UserDetails";
 import CompanyDetails from "./pages/CompanyDetails";
+import Posts from "./pages/Posts";
+import PostDetail from "./pages/Postdetail";
 
 
 const App: React.FC = () => {
@@ -23,6 +25,8 @@ const App: React.FC = () => {
             <Route path="manage-users/:id" element={<UserDetails />} />
             <Route path="manage-companies" element={< ManageCompanies />} />
             <Route path="manage-companies/:id" element={<CompanyDetails />} />
+            <Route path="posts" element={< Posts />} />
+            <Route path="posts/:id" element={<PostDetail />} />
           </Route>
         </Routes>
       </Router>

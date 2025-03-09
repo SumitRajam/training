@@ -81,3 +81,47 @@ export const useCompanyDetails = (company_id: number) => {
     });
 };
 
+export const usePosts = () => {
+    return useQuery({
+        queryKey: ['posts'],
+        queryFn: async () => {
+            const { data } = await app.get(`/posts`);
+            return data;
+        },
+    });
+};
+
+export const usePostById = (post_id: number) => {
+    return useQuery({
+        queryKey: ['posts', post_id],
+        queryFn: async () => {
+            console.log(`Post ${post_id}`);
+            const response = await app.get(`/posts/${post_id}`);
+            return response.data;
+        },
+        enabled: !!post_id,
+    });
+};
+
+export const useComments = () => {
+    return useQuery({
+        queryKey: ['comments'],
+        queryFn: async () => {
+            const { data } = await app.get(`/comments`);
+            return data;
+        },
+    });
+};
+
+export const useCommentById = (commentId: number) => {
+    return useQuery({
+        queryKey: ['comment', commentId],
+        queryFn: async () => {
+            const { data } = await app.get(`/ comments / ${commentId}`);
+            return data;
+        },
+
+        enabled: !!commentId,
+
+    });
+};

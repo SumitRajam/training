@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Card, Spin, Typography } from "antd";
-import { useUserDetails } from "../api"; // Import the custom hook
+import { useUserDetails } from "../api";
 
 const { Title } = Typography;
 

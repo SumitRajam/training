@@ -1,16 +1,28 @@
 import React, { useState } from "react";
-import { Table, Input, Button, Space, Popconfirm, Select } from "antd";
+import { Table, Input, Button, Space, Popconfirm, Select, Modal, notification } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import useCompanyStore from "../store/useCompanyStore";
+import { useForm } from "react-hook-form";
+import EditCompanyForm from "../components/EditCompanyForm";
 
 const { Search } = Input;
 const { Option } = Select;
 
 export default function ManageCompanies() {
-    const { companies, deleteCompany } = useCompanyStore();
+    const { companies, deleteCompany, updateCompany, addCompany } = useCompanyStore();
     const [searchText, setSearchText] = useState("");
     const [marketCapFilter, setMarketCapFilter] = useState<string | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentCompany, setCurrentCompany] = useState<any>(null);
+    const [isAddMode, setIsAddMode] = useState(false);
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm();
 
     const filteredCompanies = companies.filter((company) => {
         const matchesSearch = company.name.toLowerCase().includes(searchText.toLowerCase());
@@ -62,7 +74,42 @@ export default function ManageCompanies() {
     ];
 
     const handleEdit = (company: any) => {
-        console.log("Edit Company:", company);
+        setIsAddMode(false);
+        setCurrentCompany(company);
+        setIsModalOpen(true);
+        reset(company);
+    };
+
+    const handleAdd = () => {
+        setIsAddMode(true);
+        setCurrentCompany(null);
+        setIsModalOpen(true);
+        reset();
+    };
+
+    const onSubmit = (data: any) => {
+        if (isAddMode) {
+            const newCompany = {
+                ...data,
+                marketCap: `${data.marketCap}`,
+            };
+            addCompany(newCompany);
+            notification.success({
+                message: "Company Added Successfully",
+                description: `${data.name} has been added.`,
+            });
+        } else {
+            const updatedCompany = {
+                ...data,
+                marketCap: `${data.marketCap}`,
+            };
+            updateCompany(currentCompany.id, updatedCompany);
+            notification.success({
+                message: "Company Updated Successfully",
+                description: `${data.name}'s details have been updated.`,
+            });
+        }
+        setIsModalOpen(false);
     };
 
     return (
@@ -84,6 +131,7 @@ export default function ManageCompanies() {
                     <Option value="700000000">700M+</Option>
                     <Option value="1000000000">1B+</Option>
                 </Select>
+                <Button onClick={handleAdd} type="primary">Add Company</Button>
             </div>
             <div className="container-fluid flex overflow-x-auto">
                 <Table
@@ -94,6 +142,26 @@ export default function ManageCompanies() {
                     bordered
                 />
             </div>
+
+            <Modal
+                title={isAddMode ? "Add Company" : "Edit Company"}
+                open={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                footer={null}
+            >
+                <EditCompanyForm
+                    control={control}
+                    errors={errors}
+                    company={currentCompany}
+                />
+                <Button
+                    type="primary"
+                    onClick={handleSubmit(onSubmit)}
+                    style={{ marginTop: 16 }}
+                >
+                    {isAddMode ? "Add Company" : "Save Changes"}
+                </Button>
+            </Modal>
         </div>
     );
 }
