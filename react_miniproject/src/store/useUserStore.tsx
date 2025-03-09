@@ -16,10 +16,12 @@ type User = {
 
 type UserStore = {
     users: User[];
+    loggedInUser: User | null;
     setUsers: (users: User[]) => void;
     addUser: (user: User) => void;
     updateUser: (id: number, updatedUser: Partial<User>) => void;
     deleteUser: (id: number) => void;
+    setLoggedInUser: (user: User | null) => void;
 };
 
 const useUserStore = create<UserStore>()(
@@ -27,6 +29,7 @@ const useUserStore = create<UserStore>()(
         persist(
             (set) => ({
                 users: [],
+                loggedInUser: null,
 
                 setUsers: (users: User[]) => set(() => ({ users })),
 
@@ -44,6 +47,8 @@ const useUserStore = create<UserStore>()(
                     set((state) => ({
                         users: state.users.filter((user) => user.id !== id),
                     })),
+
+                setLoggedInUser: (user) => set(() => ({ loggedInUser: user })),
             }),
             { name: "user-store" }
         )

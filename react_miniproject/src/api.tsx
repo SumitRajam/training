@@ -9,6 +9,8 @@ const app = axios.create({
 });
 
 export const useLogin = () => {
+    const { setLoggedInUser } = useUserStore();
+
     return useMutation({
         mutationFn: async ({ username, password }) => {
             try {
