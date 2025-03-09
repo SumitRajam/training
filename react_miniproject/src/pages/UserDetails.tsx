@@ -9,7 +9,6 @@ export default function UserDetails() {
     const { id } = useParams<{ id: string }>();
     const userId = Number(id);
 
-    // Use the custom hook
     const { data: user, isLoading, error } = useUserDetails(userId);
 
     if (isLoading) return <Spin size="large" className="flex justify-center items-center min-h-screen" />;

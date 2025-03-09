@@ -9,8 +9,6 @@ const app = axios.create({
 });
 
 export const useLogin = () => {
-    const { setLoggedInUser } = useUserStore();
-
     return useMutation({
         mutationFn: async ({ username, password }) => {
             try {
@@ -57,6 +55,8 @@ export const useFetchData = () => {
                 totalCompanies: companiesResponse.data.length,
             };
         },
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 60 * 2,
     });
 }
@@ -69,6 +69,9 @@ export const useUserDetails = (user_id: number) => {
             return response.data;
         },
         enabled: !!user_id,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 2,
     });
 };
 
@@ -79,6 +82,9 @@ export const useCompanyDetails = (company_id: number) => {
             const response = await app.get(`/companies/${company_id}`);
             return response.data;
         },
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 2,
         enabled: !!company_id,
     });
 };
@@ -90,6 +96,9 @@ export const usePosts = () => {
             const { data } = await app.get(`/posts`);
             return data;
         },
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 2,
     });
 };
 
@@ -102,6 +111,9 @@ export const usePostById = (post_id: number) => {
             return response.data;
         },
         enabled: !!post_id,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 2,
     });
 };
 
@@ -112,6 +124,9 @@ export const useComments = () => {
             const { data } = await app.get(`/comments`);
             return data;
         },
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 2,
     });
 };
 
@@ -122,8 +137,23 @@ export const useCommentById = (commentId: number) => {
             const { data } = await app.get(`/ comments / ${commentId}`);
             return data;
         },
-
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 2,
         enabled: !!commentId,
 
+    });
+};
+
+export const useRoles = () => {
+    return useQuery({
+        queryKey: ["roles"],
+        queryFn: async () => {
+            const { data } = await app.get("/roles");
+            return data;
+        },
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 60 * 2,
     });
 };

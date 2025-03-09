@@ -4,14 +4,14 @@ import { Card, List, Alert, Typography } from "antd";
 import usePostsStore from "../store/usePostsStore";
 import useUserStore from "../store/useUserStore";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const PostDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const postIdNum = Number(id);
 
     const { getPostById, getCommentsByPostId } = usePostsStore();
-    const { users } = useUserStore(); // Get users from Zustand
+    const { users } = useUserStore();
 
     const post = getPostById(postIdNum);
     const comments = getCommentsByPostId(postIdNum);
@@ -25,7 +25,6 @@ const PostDetail: React.FC = () => {
         return <Alert message="Post not found" type="warning" showIcon />;
     }
 
-    // Function to get author's name from Zustand store
     const getAuthorName = (userId: number) => {
         const user = users.find((user) => user.id === userId);
         return user ? user.name : "Unknown Author";
