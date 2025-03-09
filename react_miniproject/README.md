@@ -1,6 +1,7 @@
 ## Mini-Project Demo
 
-https://github.com/user-attachments/assets/e27cb1e8-eda0-444a-ae59-d944e486a094
+https://github.com/user-attachments/assets/4db14552-4a44-431b-bb43-7a547f90721a
+
 
 ## Responsiveness
 
