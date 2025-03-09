@@ -12,7 +12,7 @@ type LoginFormInputs = {
 
 const { Title } = Typography;
 
-const LoginForm: React.FC = () => {
+const Login: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -55,7 +55,6 @@ const LoginForm: React.FC = () => {
             <Card className="w-full max-w-md shadow-lg rounded-lg p-6 bg-white">
                 <Title level={3} className="text-center mb-6 text-gray-800">Login</Title>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    {/* Username Field */}
                     <Form.Item label="Username" validateStatus={errors.username ? "error" : ""} help={errors.username?.message}>
                         <Controller
                             name="username"
@@ -64,8 +63,6 @@ const LoginForm: React.FC = () => {
                             render={({ field }) => <Input {...field} placeholder="Enter your username" size="large" />}
                         />
                     </Form.Item>
-
-                    {/* Password Field */}
                     <Form.Item label="Password" validateStatus={errors.password ? "error" : ""} help={errors.password?.message}>
                         <Controller
                             name="password"
@@ -74,8 +71,6 @@ const LoginForm: React.FC = () => {
                             render={({ field }) => <Input.Password {...field} placeholder="Enter your password" size="large" />}
                         />
                     </Form.Item>
-
-                    {/* Submit Button */}
                     <Button type="primary" htmlType="submit" className="w-full" size="large" loading={loginMutation.isPending}>
                         {loginMutation.isPending ? "Logging in..." : "Login"}
                     </Button>
@@ -85,4 +80,4 @@ const LoginForm: React.FC = () => {
     );
 };
 
-export default LoginForm;
+export default Login;

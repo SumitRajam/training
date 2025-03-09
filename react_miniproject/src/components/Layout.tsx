@@ -10,7 +10,7 @@ const AppLayout: React.FC = () => {
         <Layout className="min-h-screen">
             <Navbar />
             <Content className="p-2 bg-gray-100">
-                <div className='container p-4 bg-white'>
+                <div className='container-fluid p-4 bg-white'>
                     <Outlet />
                 </div>
             </Content>

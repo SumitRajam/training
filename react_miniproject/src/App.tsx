@@ -3,6 +3,10 @@ import AppLayout from "./components/Layout";
 import Login from "./pages/Login";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home";
+import ManageCompanies from "./pages/ManageCompanies";
+import ManageUsers from "./pages/ManageUsers";
+import UserDetails from "./pages/UserDetails";
+import CompanyDetails from "./pages/CompanyDetails";
 
 
 const App: React.FC = () => {
@@ -15,8 +19,10 @@ const App: React.FC = () => {
           <Route path="/" element={<Login />} />
           <Route path="/dashboard/*" element={< AppLayout />} >
             <Route index element={<Home />} />
-            <Route path="users" element={<h1>Users Page</h1>} />
-            <Route path="settings" element={<h1>Settings Page</h1>} />
+            <Route path="manage-users" element={< ManageUsers />} />
+            <Route path="manage-users/:id" element={<UserDetails />} />
+            <Route path="manage-companies" element={< ManageCompanies />} />
+            <Route path="manage-companies/:id" element={<CompanyDetails />} />
           </Route>
         </Routes>
       </Router>

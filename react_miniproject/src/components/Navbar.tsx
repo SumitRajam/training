@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Drawer, Menu, Button } from 'antd';
-import { MenuUnfoldOutlined, HomeOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined, HomeOutlined, UserOutlined, ApartmentOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const { Header } = Layout;
@@ -16,9 +16,9 @@ const Navbar: React.FC = () => {
     }, []);
 
     const menuItems = [
-        { key: '1', icon: <HomeOutlined />, label: <Link to="/" onClick={() => setIsDrawerOpen(false)}>Home</Link> },
-        { key: '2', icon: <UserOutlined />, label: <Link to="/users" onClick={() => setIsDrawerOpen(false)}>Users</Link> },
-        { key: '3', icon: <SettingOutlined />, label: <Link to="/settings" onClick={() => setIsDrawerOpen(false)}>Settings</Link> },
+        { key: '1', icon: <HomeOutlined />, label: <Link to="/dashboard" onClick={() => setIsDrawerOpen(false)}>Home</Link> },
+        { key: '2', icon: <UserOutlined />, label: <Link to="manage-users" onClick={() => setIsDrawerOpen(false)}>Users</Link> },
+        { key: '3', icon: <ApartmentOutlined />, label: <Link to="/manage-companies" onClick={() => setIsDrawerOpen(false)}>Companies</Link> },
     ];
 
     return (
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
                     <Menu
                         mode="horizontal"
                         className="border-none"
-                        style={{ backgroundColor: '#ffffff' }}
+                        style={{ backgroundColor: '#ffffff', width: '320px' }}
                         items={menuItems}
                     />
                 )}
